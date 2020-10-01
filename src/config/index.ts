@@ -7,6 +7,11 @@ if (envFound.error) {
 
 export default {
 
-  port: process.env.PORT ? parseInt(process.env.PORT, 10) : 3000
+  port: process.env.PORT ? parseInt(process.env.PORT, 10) : 3000,
+
+  teamworkAPI: {
+    key: process.env.TW_API_KEY,
+    sub: process.env.TW_SUB_DOMAIN
+  }
   
 };
