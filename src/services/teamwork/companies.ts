@@ -1,31 +1,33 @@
 import { Service, Inject } from 'typedi';
-import { PartyResponse, I3rdPartyAPI, airTableFieldType } from '../../interfaces/IPartyResponse';
-import TeamworkAPI from './';
+import Teamwork from './teamwork';
+import { literal } from '../literal';
 
 @Service()
-export default class TWCompanies implements I3rdPartyAPI {
+export default class TWCompanies extends Teamwork {
   constructor(
-    @Inject('teamworkapi') private Teamwork,
-    @Inject('logger') private logger,
-    @Inject('literal') private literal,
-  ) { }
+    @Inject('logger') private logger
+  ) { super() }
 
-  public metaData = [
+  metaData = [
     {
       key: 'id',
-      type: 'singleLineText' as 'singleLineText',
+      type: literal<'singleLineText'>('singleLineText'),
       fieldName: 'id',
       apiMap: 'id'
     },
     {
       key: 'name',
-      type: 'singleLineText' as 'singleLineText',
+      type: literal<'singleLineText'>('singleLineText'),
       fieldName: 'Company Name',
       apiMap: 'name',
     }
-  ];
+  ]
 
-  public async get(): Promise<PartyResponse> {
-    let companies = await this.Teamwork.companies.get().then(results => (results.companies));
+  public async get() {
+    let companies = await this.teamwork.companies.get().then(results => (results.companies));
+
+    let preparedResults = this.prepare(companies);
+
+    return preparedResults;
   }
 }

@@ -1,12 +1,29 @@
-import { Service, Inject } from 'typedi';
-import { I3rdPartyAPI } from '../../interfaces/IPartyResponse';
+import { Service } from 'typedi';
+import { Container } from 'typedi';
 
-@Service()
-export default class TeamworkAPI implements I3rdPartyAPI {
-  constructor(
-    @Inject('teamworkapi') private Teamwork?,
-    @Inject('logger') private logger?,
-  ) { }
+interface ITeamworkEndPoints {
+  // Needs redoing
+  [key: string]: any
+};
 
+function createEndPoints() {
+  const apiEndPoints = {
+    teamwork: require('./teamwork').default,
+    companies: require('./companies').default
+  };
 
+  const base = Container.get(apiEndPoints['teamwork']) as object;
+
+  return new TeamworkAPI(new Proxy(base, {
+    get: (target, name) => {
+      return apiEndPoints[name] ? 
+        Container.get(apiEndPoints[name]) : 
+        base[name]
+    }
+  }));
+}
+
+@Service({factory: createEndPoints})
+export default class TeamworkAPI {
+  constructor(public api: ITeamworkEndPoints) {}
 }

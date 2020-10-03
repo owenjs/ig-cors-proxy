@@ -15,7 +15,8 @@ export interface prFields {
 
 };
 
-export type prMetaData = Array<prFields>;
+// ToDo: Not an Interface, no need for 'I'
+export type IAPIMetaData = Array<prFields>;
 
 export interface PartyResponse {
   // The response from the 3rd party API
@@ -24,6 +25,6 @@ export interface PartyResponse {
 
 export interface I3rdPartyAPI {
   // The response from the 3rd party API
-  metaData: prMetaData,
+  metaData: IAPIMetaData,
   [key: string]: any
 };
