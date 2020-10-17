@@ -1,7 +1,6 @@
 import { Router, Request, Response, NextFunction } from 'express';
 import { Container } from 'typedi';
 import TeamworkAPI from '../../services/teamwork';
-import config from '../../config';
 import winston from 'winston';
 
 const route = Router();
@@ -19,7 +18,7 @@ export default (app: Router) => {
     try {
       const response = await teamworkAPIInstance.api.companies.get();
       logger.info('Teamwork Companies Received');
-      return res.status(201).json(response);
+      return res.status(200).json(response);
     } catch(e) {
       logger.error('Get Teamwork Companies Error: %o', e);
       return next(e);

@@ -1,6 +1,6 @@
 import { Service, Inject } from 'typedi';
 import Teamwork from './teamwork';
-import { literal } from '../literal';
+import { literal } from '../../util/literal';
 
 @Service()
 export default class TWCompanies extends Teamwork {

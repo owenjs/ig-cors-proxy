@@ -7,13 +7,13 @@ interface ITeamworkEndPoints {
 
 function createEndPoints() {
   const apiEndPoints = {
-    teamwork: require('./teamwork').default,
-    companies: require('./companies').default
+    hubspot: require('./hubspot').default,
+    deals: require('./deals').default
   };
 
-  const base = Container.get(apiEndPoints['teamwork']) as object;
+  const base = Container.get(apiEndPoints['hubspot']) as object;
 
-  return new TeamworkAPI(new Proxy(base, {
+  return new HubspotAPI(new Proxy(base, {
     get: (target, name) => {
       return apiEndPoints[name] ? 
         Container.get(apiEndPoints[name]) : 
@@ -23,6 +23,6 @@ function createEndPoints() {
 }
 
 @Service({factory: createEndPoints})
-export default class TeamworkAPI {
+export default class HubspotAPI {
   constructor(public api: ITeamworkEndPoints) {}
 }

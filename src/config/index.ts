@@ -12,6 +12,10 @@ export default {
   teamworkAPI: {
     key: process.env.TW_API_KEY,
     sub: process.env.TW_SUB_DOMAIN
+  },
+
+  hubspotAPI: {
+    key: process.env.HS_API_KEY
   }
   
 };
