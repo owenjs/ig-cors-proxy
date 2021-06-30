@@ -30,7 +30,7 @@ export default class HSDeals extends Hubspot {
   ]
 
   public async get() {
-    let deals = await this.hubspot.deals.get({properties: ['dealname', 'dealstage']}).then(results => (results.deals));
+    let deals = await this.hubspot.deals.getRecentlyModified(/*{properties: ['dealname', 'dealstage']}*/).then(results => (results.results));
 
     let preparedResults = this.prepare(deals);
 
